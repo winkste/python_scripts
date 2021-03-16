@@ -1,4 +1,5 @@
 from urllib.request import urlopen
+import re
 
 #url = "http://olympus.realpython.org/profiles/aphrodite"
 url = "http://olympus.realpython.org/profiles/poseidon"
