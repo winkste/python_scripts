@@ -13,10 +13,10 @@ camera.framerate = 25
 rawCapture = PiRGBArray(camera, size=(320, 240))
  
 # allow the camera to warmup
-time.sleep(1.0)
+time.sleep(1.5)
  
 # capture frames from the camera
-for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_p)
+for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
     # grab the raw NumPy array representing the image, then initialize t$
     # and occupied/unoccupied text
     image = frame.array
