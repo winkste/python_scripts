@@ -5,15 +5,32 @@ from picamera.array import PiRGBArray
 from picamera import PiCamera
 import time
 import cv2
- 
+import numpy 
+
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
-camera.resolution = (320, 240)
+var1 = 1024
+var2 = 768
+camera.resolution = (var1, var2)
 camera.framerate = 25
-rawCapture = PiRGBArray(camera, size=(320, 240))
+#camera.rotation = 90
+rawCapture = PiRGBArray(camera, size=(var1, var2))
  
 # allow the camera to warmup
 time.sleep(1.5)
+
+img_avg = [0.0, 0.0, 0.0, 0.0, 0.0]
+
+def check_brightness(image):
+    global img_avg
+    
+    img_avg.append(numpy.average(image))
+    del img_avg[0]
+    if numpy.average(img_avg) > 15:
+        return True
+    else:
+        return False
+
  
 # capture frames from the camera
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
@@ -21,6 +38,13 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     # and occupied/unoccupied text
     #test
     image = frame.array
+
+    #avg_color_per_row = numpy.average(image, axis=0)
+    #avg_color = numpy.average(avg_color_per_row, axis=0)
+    #avg_all = numpy.average(avg_color)
+    #avg_all = numpy.average(image)
+    #print(avg_all)
+    #print(check_brightness(image))
 
     # show the frame
     cv2.imshow("Frame", image)

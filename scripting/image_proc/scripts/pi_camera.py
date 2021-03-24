@@ -5,10 +5,26 @@ from picamera.array import PiRGBArray
 from picamera import PiCamera
 import time
 import cv2
+import numpy
 import datetime
 import os
 
 image_counter = 10
+
+img_avg = [0.0, 0.0, 0.0, 0.0, 0.0]
+
+def check_brightness(image):
+    global img_avg
+    
+    img_avg.append(numpy.average(image))
+    del img_avg[0]
+    #dark is an average < 10
+    #standard light above the printer is 105
+    #4max pro led is an average about 100
+    if numpy.average(img_avg) > 15:
+        return True
+    else:
+        return False
 
 def check_timelapse_trigger(image):
     global image_counter
@@ -22,11 +38,16 @@ def check_timelapse_trigger(image):
 
 def initialize_camera():
     print('initialize camera...')
+    img_resolution = [320, 240]
+    cam_framerate = 25
+    cam_orientation = 90
+
     # initialize the camera and grab a reference to the raw camera capture
     camera = PiCamera()
-    camera.resolution = (320, 240)
-    camera.framerate = 25
-    rawCapture = PiRGBArray(camera, size=(320, 240))
+    camera.resolution = (img_resolution[0], img_resolution[1])
+    camera.framerate = cam_framerate
+    camera.rotation = cam_orientation
+    rawCapture = PiRGBArray(camera, size=(img_resolution[0], img_resolution[1]))
 
     print('warm up waiting...')
     # allow the camera to warmup
@@ -61,8 +82,8 @@ def main():
             #check if the image is not dark
             timelapse_active = check_timelapse_trigger(image)
             timelapse_completed = False
-            #compare the last 5 images, difference shall not be treshold
-            path = os.getcwd()
+            path = '/media/pi/UNTITLED/capture'
+            #path = os.getcwd()
             #create folder for temporary jpeg images
             path = path + '/' + create_folder_name()
             try:
@@ -88,6 +109,7 @@ def main():
             image_index = image_index + 1
         
         if timelapse_completed == True:
+            #store all images to a video and delete the images
             return
         
         time.sleep(1.0)
