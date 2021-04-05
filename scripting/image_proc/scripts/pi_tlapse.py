@@ -66,7 +66,7 @@ def create_folder_name():
 
 
 def main():
-    timelapse_active = False
+    timelaps_state = 0
     file_name_path = None
 
     camera, rawCapture = initialize_camera()
@@ -77,59 +77,40 @@ def main():
         # grab the raw NumPy array representing the image, then initialize t$
         # and occupied/unoccupied text
         image = frame.array
-        
-        if False == timelapse_active:
-            #check if the image is not dark
-            timelapse_active = check_timelapse_trigger(image)
-            timelapse_completed = False
-            path = '/media/pi/UNTITLED/capture'
-            #path = os.getcwd()
-            #create folder for temporary jpeg images
-            path = path + '/' + create_folder_name()
-            try:
-                os.mkdir(path)
-            except OSError:
-                print(f'Cteation of the directory {path} failed')
-                timelapse_active = False
-            else:
-                print(f'created working directory {path}')
-                x = datetime.datetime.now()
-                file_name_path = x.strftime(path + '/' + '%y%m%d%H%M%S')
-                image_index = 0
+
+        printer_light_on = check_brightness(image)
+        if 0 == timelaps_state:
+            if printer_light_on:
+                #start picture capturing
+                path = '/media/pi/UNTITLED/capture'
+                path = path + '/' + create_folder_name()
+                try:
+                    os.mkdir(path)
+                except OSError:
+                    print(f'Cteation of the directory {path} failed')
+                else:
+                    print(f'created working directory {path}')
+                    x = datetime.datetime.now()
+                    file_name_path = x.strftime(path + '/' + '%y%m%d%H%M%S')
+                    image_index = 0
+                    cv2.imwrite(f'{file_name_path}_{image_index:010d}.jpg', image)
+                    print(f'stored image: {file_name_path}_{image_index:010d}.jpg')
+                    image_index = image_index + 1
+                    timelaps_state = 1
+        elif 1 == timelaps_state:
+            if printer_light_on:
                 cv2.imwrite(f'{file_name_path}_{image_index:010d}.jpg', image)
                 print(f'stored image: {file_name_path}_{image_index:010d}.jpg')
                 image_index = image_index + 1
-        else:
-            #check if the image is not dark
-            timelapse_active = check_timelapse_trigger(image)
-            if False == timelapse_active:
-                timelapse_completed = True
-            cv2.imwrite(f'{file_name_path}_{image_index:010d}.jpg', image)
-            print(f'stored image: {file_name_path}_{image_index:010d}.jpg')
-            image_index = image_index + 1
+            else:
+                timelaps_state = 2
+        elif 2 == timelaps_state:
+                return
         
-        if timelapse_completed == True:
-            #store all images to a video and delete the images
-            return
-        
-        time.sleep(1.0)
+        time.sleep(5.0)    
 
         # clear the stream in preparation for the next frame
         rawCapture.truncate(0)
-
-
-        #if timecapsule is started, add image to video
-
-        # show the frame
-        #cv2.imshow("Frame", image)
-        #key = cv2.waitKey(1) & 0xFF
-
-        # clear the stream in preparation for the next frame
-        rawCapture.truncate(0)
-
-        # if the `q` key was pressed, break from the loop
-        #if key == ord("q"):
-        #    break
 
 
 
