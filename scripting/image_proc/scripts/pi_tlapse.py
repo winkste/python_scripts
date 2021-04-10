@@ -9,7 +9,6 @@ import numpy
 import datetime
 import os
 
-image_counter = 10
 
 img_avg = [0.0, 0.0, 0.0, 0.0, 0.0]
 
@@ -22,15 +21,6 @@ def check_brightness(image):
     #standard light above the printer is 105
     #4max pro led is an average about 100
     if numpy.average(img_avg) > 15:
-        return True
-    else:
-        return False
-
-def check_timelapse_trigger(image):
-    global image_counter
-
-    if image_counter > 0:
-        image_counter = image_counter - 1
         return True
     else:
         return False
@@ -63,6 +53,42 @@ def create_folder_name():
     x = datetime.datetime.now()
     folder_name = x.strftime('%y%m%d%H%M')
     return folder_name
+
+def video_maker(img_folder, vid_name):
+    image_names = []
+    img_array = []
+    print('creating image file name list...')
+    for filename in glob.glob(img_folder + '/*.jpg'):
+        image_names.append(filename)
+    image_names.sort()
+
+
+    print('create image list...')
+    for i in image_names:
+        img = cv2.imread(i)
+        height, width, layers = img.shape
+        size = (width,height)
+        img_array.append(img)
+
+    print('write images to video file...')
+    #fourcc = 0x00000021
+    #fourcc = cv2.VideoWriter_fourcc(*'MP4V')
+    fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
+    out = cv2.VideoWriter(img_folder + '/' +vid_name + '.mp4', fourcc, 15, size)
+    for i in range(len(img_array)):
+        out.write(img_array[i])
+    out.release()
+    print('process completed...')
+
+def delete_tempo_pictures(img_folder):
+    image_names = []
+
+    print('prepare delete...')
+    for filename in glob.glob(img_folder + '/*.jpg'):
+        image_names.append(filename)
+    print('delete files...')
+    for i in image_names:
+        os.remove(i)
 
 
 def main():
@@ -105,7 +131,10 @@ def main():
             else:
                 timelaps_state = 2
         elif 2 == timelaps_state:
-                return
+                #create video and delete all temporary pictures
+                video_maker(file_name_path, video)
+                delete_tempo_pictures(file_name_path)
+                timelaps_state = 0
         
         time.sleep(5.0)    
 
