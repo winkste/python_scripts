@@ -8,6 +8,7 @@ import cv2
 import numpy
 import datetime
 import os
+import glob
 
 
 img_avg = [0.0, 0.0, 0.0, 0.0, 0.0]
@@ -73,12 +74,16 @@ def video_maker(img_folder, vid_name):
     print('write images to video file...')
     #fourcc = 0x00000021
     #fourcc = cv2.VideoWriter_fourcc(*'MP4V')
-    fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
-    out = cv2.VideoWriter(img_folder + '/' +vid_name + '.mp4', fourcc, 15, size)
-    for i in range(len(img_array)):
-        out.write(img_array[i])
-    out.release()
-    print('process completed...')
+    if len(img_array):
+        fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
+        out = cv2.VideoWriter(img_folder + '/' +vid_name + '.mp4', fourcc, 15, size)
+        for i in range(len(img_array)):
+            out.write(img_array[i])
+        out.release()
+        print('process completed...')
+        print('image stored: ' + img_folder + '/' +vid_name + '.mp4')
+    else:
+        print('no images found in: ' + img_folder)
 
 def delete_tempo_pictures(img_folder):
     image_names = []
@@ -94,10 +99,12 @@ def delete_tempo_pictures(img_folder):
 def main():
     timelaps_state = 0
     file_name_path = None
+    file_path = None
 
     camera, rawCapture = initialize_camera()
 
     print('image capturing main loop...')
+    print('waiting for image capturing...')
     # capture frames from the camera
     for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
         # grab the raw NumPy array representing the image, then initialize t$
@@ -132,9 +139,10 @@ def main():
                 timelaps_state = 2
         elif 2 == timelaps_state:
                 #create video and delete all temporary pictures
-                video_maker(file_name_path, video)
-                delete_tempo_pictures(file_name_path)
+                video_maker(path, 'video')
+                delete_tempo_pictures(path)
                 timelaps_state = 0
+                print('waiting for image capturing...')
         
         time.sleep(5.0)    
 

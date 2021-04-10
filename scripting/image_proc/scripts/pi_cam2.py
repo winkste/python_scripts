@@ -24,9 +24,15 @@ img_avg = [0.0, 0.0, 0.0, 0.0, 0.0]
 def check_brightness(image):
     global img_avg
     
+    #print(numpy.mean(image))
     img_avg.append(numpy.average(image))
     del img_avg[0]
-    if numpy.average(img_avg) > 15:
+    avg = numpy.average(img_avg)
+    print(avg)
+    #avg with light on: 95-97
+    #avg with printer on: 77q-78
+    #avg with both on: 93-94
+    if avg > 15:
         return True
     else:
         return False
@@ -45,6 +51,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     #avg_all = numpy.average(image)
     #print(avg_all)
     #print(check_brightness(image))
+    check_brightness(image)
 
     # show the frame
     cv2.imshow("Frame", image)
