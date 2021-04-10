@@ -128,3 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 scripting/.DS_Store
+scripting/excel_man/.DS_Store
+scripting/image_proc/resource/.DS_Store
+scripting/image_proc/resource/2104041603/.DS_Store
+scripting/image_proc/scripts/.DS_Store

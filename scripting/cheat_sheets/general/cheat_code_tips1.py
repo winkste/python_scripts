@@ -1,7 +1,11 @@
 '''
     python_coding_tips
+
+    This coding tips script is designed to run single tips in
+    the python / jupyter extension of VSCode
 '''
 
+# %%
 '''
 ternary conditions:
 '''
@@ -9,6 +13,7 @@ condition = True
 x = 1 if condition else 0
 
 
+# %%
 '''
 underscore placeholder is better to read big numbers
 '''
@@ -16,6 +21,7 @@ num1 = 100_000_000_000
 num2 = 100000000000 
 x = 1 if num1 == num2 else 0
 
+# %%
 '''
 short form of format:
 '''
@@ -24,16 +30,23 @@ print(f'{num:,}')
 1,000,000,000
 print(f'0x{num:02x}') #0x3b9aca00
 
-
+# %%
+'''
+get actual working directory
+'''
+import os
+print(os.getcwd())
+# %%
 '''
 use context manager to handle ressources
 '''
-with open('test.txt', 'r') as f:
+with open('/Users/stephan_wink/workspace_github/python_scripts/scripting/cheat_sheets/general/test.txt', 'r') as f:
     file_contents = f.read()
 
 words = file_contents.split(' ')
-print(len(words))
+print(f'Words in file: {len(words)}')
 
+# %%
 '''
 using the enumerate function:
 '''
@@ -43,6 +56,7 @@ names = ['Corey', 'Chris', 'Dave', 'Travis']
 for index, name in enumerate(names, start=1):
     print (index, name)
 
+# %%
 '''
 how to do multiple list accesses with 'zip' function
 '''
@@ -53,6 +67,7 @@ for name , hero in zip(names, heroes):
 
     print(f'{name} is actually {hero}')
 
+# %%
 '''
 How does unpacking work
 '''
@@ -68,6 +83,7 @@ print(b)
 a, b, *c = (1, 2, 3, 4, 5)
 print(c)
 
+# %%
 '''
 getting key and value from dictionary
 '''
@@ -75,6 +91,7 @@ pers_info = {'first':'Stephan', 'last':'Wink'}
 for key, value in pers_info.items():
     print(key, value)
 
+# %%
 '''
 adding attributes and getting attributes dynamically from
     a class using the setattr & getattr functions
@@ -96,6 +113,7 @@ setattr(person, 'first', 'Stephan')
 first = getattr(person, first_key)
 print(person.first, first)
 
+# %%
 '''
 inputting secrete information
 '''
@@ -106,6 +124,7 @@ username = input('Username: ')
 password = getpass('Password: ')
 print('logging in ...')
 
+# %%
 '''
 run python with the '-m' option
 '''
@@ -113,6 +132,7 @@ run python with the '-m' option
 # searches the sys path for the module without .py
 # e.g. python -m smtpd -c DebuggingServer -n localhost:1025
 
+# %%
 '''
 learn more about modules using built in functions
 '''
@@ -124,7 +144,4 @@ print(dir(datetime)) #prints all methods and attributes of a class
 print(datetime.today) #prints info of this method or attribute
 print(datetime.today()) #now you can use the method
 
-
-
-
-
+# %%
