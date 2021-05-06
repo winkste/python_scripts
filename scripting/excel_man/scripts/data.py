@@ -1,0 +1,10 @@
+data = [[None, None, None, None, None],
+ [None, 'Data1', 25, 'X', 'Blabla'],
+ [None, 'Data2', 33, 'I', 'Tötete'],
+ [None, 'Data3', 24, 'X', 'Blagaain'],
+ [None, None, None, None, None],
+ [None, None, None, None, None],
+ [None, None, None, None, None],
+ [None, None, None, None, None],
+ [None, None, None, None, None],
+ [None, None, None, None, None]]

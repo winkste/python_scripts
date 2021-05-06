@@ -32,5 +32,5 @@ def video_maker(img_folder, vid_name):
 if __name__ == '__main__':
     print('video maker test:')
     #video_maker('/Volumes/Macintosh HD/Users/stephan_wink/workspace_github/python_scripts/scripting/image_proc/resource/2103241924', 'project')
-    video_maker('/Volumes/Macintosh HD/Users/stephan_wink/workspace_github/python_scripts/scripting/image_proc/resource/2104041603', 'project')
-    
+    #video_maker('/Volumes/Macintosh HD/Users/stephan_wink/workspace_github/python_scripts/scripting/image_proc/resource/2104041603', 'project')
+    video_maker('/Volumes/Macintosh HD/Users/stephan_wink/Downloads/2104162013', 'vid')

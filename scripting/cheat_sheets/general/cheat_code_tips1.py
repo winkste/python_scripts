@@ -145,3 +145,14 @@ print(datetime.today) #prints info of this method or attribute
 print(datetime.today()) #now you can use the method
 
 # %%
+'''
+run your python script as script w/o python3 interpreter
+'''
+# ensure the fist line is the shebang line:
+#!/usr/local/bin/python3
+
+#ensure that the file has the right permissions to execute:
+chmod +x hello_world.py
+
+#run the script on OSX with:
+./hello_world.py

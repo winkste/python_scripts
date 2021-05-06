@@ -2,8 +2,8 @@ import numpy as np
 import cv2
 
 # Open a sample video available in sample-videos
-#vcap = cv2.VideoCapture('https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4')
-cv2.VideoCapture('192.168.178.84:81/stream')
+vcap = cv2.VideoCapture('https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4')
+#vcap = cv2.VideoCapture('192.168.178.84:81/stream')
 #if not vcap.isOpened():
 #    print "File Cannot be Opened"
 
