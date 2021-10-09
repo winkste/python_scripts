@@ -1,0 +1,45 @@
+Convention: Name of environment == venv
+
+Libraries installed:
+  pip list
+
+Create a virtual environment:
+  python -m venv project_env
+
+Activate virtual environment:
+	project_env/bin/activate
+Or some times
+	source venv/bin/activate
+
+Show the active python interpreter
+	which python
+
+Installing any library
+	pip install requests
+
+Export the packages list with requirements.txt file
+	pip freeze > requirements.txt
+
+Deactivation of an environment
+	deactivate
+
+Using a requirements.txt file to load packages
+	pip install -r requirements.txt
+
+
+Delete an environment
+	rm -rf project_env
+
+Project setup
+proc_path:
+-> scripts
+-> src
+-> requirements.txt
+->venv (Never under source control)
+
+
+Virtual environment accessing system packages
+	python -m venv venv —system-site-packages
+
+Locate local packages in that system referring environment
+	pip list —local
