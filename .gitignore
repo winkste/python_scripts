@@ -134,3 +134,17 @@ scripting/image_proc/resource/2104041603/.DS_Store
 scripting/image_proc/scripts/.DS_Store
 scripting/cheat_sheets/files/examples/scripts/.DS_Store
 scripting/cheat_sheets/files/resources/.DS_Store
+scripting/c_parser/cparse_venv/pyvenv.cfg
+scripting/c_parser/cparse_venv/bin/python3.9
+scripting/c_parser/cparse_venv/bin/python3
+scripting/c_parser/cparse_venv/bin/python
+scripting/c_parser/cparse_venv/bin/pip3.9
+scripting/c_parser/cparse_venv/bin/pip3
+scripting/c_parser/cparse_venv/bin/pip
+scripting/c_parser/cparse_venv/bin/easy_install-3.9
+scripting/c_parser/cparse_venv/bin/easy_install
+scripting/c_parser/cparse_venv/bin/Activate.ps1
+scripting/c_parser/cparse_venv/bin/activate.fish
+scripting/c_parser/cparse_venv/bin/activate.csh
+scripting/c_parser/cparse_venv/bin/activate
+.DS_Store
