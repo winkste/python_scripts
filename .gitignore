@@ -109,6 +109,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+zipper_391_zipper/
 
 # Spyder project settings
 .spyderproject
